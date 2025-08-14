@@ -49,16 +49,23 @@ const navigation = [
   }
 ];
 
-const DropdownMenu = ({ item, isOpen, onToggle }: any) => {
+const DropdownMenu = ({ item }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div className="relative">
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
       <button
-        onClick={onToggle}
-        className="flex items-center space-x-1 px-4 py-2 text-foreground hover:text-primary transition-colors duration-200 group"
+        className="flex items-center space-x-1 px-4 py-2 text-foreground hover:text-primary transition-all duration-300 group"
+        aria-expanded={isOpen}
+        aria-haspopup="true"
       >
         <item.icon className="w-4 h-4 mr-1" />
         <span className="font-medium">{item.name}</span>
-        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
         <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
       </button>
 
@@ -68,8 +75,8 @@ const DropdownMenu = ({ item, isOpen, onToggle }: any) => {
             initial={{ opacity: 0, y: -10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 mt-2 w-80 glass-effect rounded-xl border border-border/50 shadow-elevation-lg z-50"
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute top-full left-0 mt-2 w-80 bg-card/95 backdrop-blur-xl rounded-xl border border-border shadow-elevation-lg z-50"
           >
             <div className="p-6">
               <div className="grid gap-4">
@@ -77,7 +84,8 @@ const DropdownMenu = ({ item, isOpen, onToggle }: any) => {
                   <Link
                     key={subItem.href}
                     to={subItem.href}
-                    className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-muted/50 transition-colors duration-200"
+                    className="group flex items-start space-x-3 p-3 rounded-lg hover:bg-primary/10 transition-all duration-200 border border-transparent hover:border-primary/20"
+                    onClick={() => setIsOpen(false)}
                   >
                     <div className="flex-shrink-0 w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
                       <subItem.icon className="w-4 h-4 text-primary-foreground" />
@@ -102,13 +110,8 @@ const DropdownMenu = ({ item, isOpen, onToggle }: any) => {
 };
 
 export default function Header() {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-
-  const handleDropdownToggle = (name: string) => {
-    setOpenDropdown(openDropdown === name ? null : name);
-  };
 
   const isActivePage = (href: string) => {
     return location.pathname === href;
@@ -140,8 +143,6 @@ export default function Header() {
                 <DropdownMenu
                   key={item.name}
                   item={item}
-                  isOpen={openDropdown === item.name}
-                  onToggle={() => handleDropdownToggle(item.name)}
                 />
               ))}
               <Link
@@ -257,13 +258,6 @@ export default function Header() {
         )}
       </AnimatePresence>
 
-      {/* Click outside to close dropdown */}
-      {openDropdown && (
-        <div
-          className="fixed inset-0 z-30"
-          onClick={() => setOpenDropdown(null)}
-        />
-      )}
     </>
   );
 }
