@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -289,12 +290,16 @@ export default function Flows() {
                             </Badge>
                           </div>
                           <div className="absolute bottom-4 right-4 flex space-x-2">
-                            <Button size="sm" variant="secondary" className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <Eye className="w-4 h-4" />
-                            </Button>
-                            <Button size="sm" className="bg-gradient-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <Play className="w-4 h-4" />
-                            </Button>
+                            <Link to={`/template/${template.id}`}>
+                              <Button size="sm" variant="secondary" className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <Eye className="w-4 h-4" />
+                              </Button>
+                            </Link>
+                            <Link to="/builder">
+                              <Button size="sm" className="bg-gradient-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <Play className="w-4 h-4" />
+                              </Button>
+                            </Link>
                           </div>
                         </div>
                       )}
@@ -342,10 +347,12 @@ export default function Flows() {
                         </div>
 
                         <div className="flex items-center justify-between">
-                          <Button variant="outline" size="sm" className="group">
-                            <Eye className="w-4 h-4 mr-2" />
-                            Preview
-                          </Button>
+                          <Link to={`/template/${template.id}`}>
+                            <Button variant="outline" size="sm" className="group">
+                              <Eye className="w-4 h-4 mr-2" />
+                              Preview
+                            </Button>
+                          </Link>
                           <div className="flex items-center space-x-2">
                             <Button variant="ghost" size="sm">
                               <Copy className="w-4 h-4" />
@@ -353,9 +360,11 @@ export default function Flows() {
                             <Button variant="ghost" size="sm">
                               <Share className="w-4 h-4" />
                             </Button>
-                            <Button size="sm" className="bg-gradient-primary hover:opacity-90">
-                              Use Template
-                            </Button>
+                            <Link to="/builder">
+                              <Button size="sm" className="bg-gradient-primary hover:opacity-90">
+                                Use Template
+                              </Button>
+                            </Link>
                           </div>
                         </div>
                       </div>

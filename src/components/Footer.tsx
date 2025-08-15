@@ -209,7 +209,7 @@ export default function Footer() {
         <div className="py-8 border-t border-border/30">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-              <span>© 2024 NeuroFlow. All rights reserved.</span>
+              <span>© 2025 NeuroFlow. All rights reserved.</span>
               <div className="flex items-center space-x-4">
                 {footerLinks.legal.map((link, index) => (
                   <span key={link.name} className="flex items-center space-x-4">

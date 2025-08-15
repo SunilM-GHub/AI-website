@@ -10,6 +10,18 @@ import Playground from "./pages/Playground";
 import ApiKeys from "./pages/ApiKeys";
 import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
+import Enterprise from "./pages/Enterprise";
+import Docs from "./pages/Docs";
+import About from "./pages/About";
+import Tutorials from "./pages/Tutorials";
+import Startups from "./pages/Startups";
+import Integrations from "./pages/Integrations";
+import Community from "./pages/Community";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import GetStarted from "./pages/GetStarted";
+import WorkflowTemplate from "./pages/WorkflowTemplate";
+import WorkflowBuilder from "./components/WorkflowBuilder";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ThreeBackground from "./components/ThreeBackground";
@@ -33,6 +45,18 @@ const App = () => (
               <Route path="/playground" element={<Playground />} />
               <Route path="/api-keys" element={<ApiKeys />} />
               <Route path="/pricing" element={<Pricing />} />
+              <Route path="/enterprise" element={<Enterprise />} />
+              <Route path="/docs" element={<Docs />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/tutorials" element={<Tutorials />} />
+              <Route path="/startups" element={<Startups />} />
+              <Route path="/integrations" element={<Integrations />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/get-started" element={<GetStarted />} />
+              <Route path="/template/:id" element={<WorkflowTemplate />} />
+              <Route path="/builder" element={<WorkflowBuilder />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

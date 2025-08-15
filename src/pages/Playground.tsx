@@ -100,21 +100,61 @@ export default function Playground() {
     setIsLoading(true);
     setResponse('');
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setResponse(`This is a simulated response from ${currentModel?.name}. 
+    try {
+      // Simulate real API call with more realistic response
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Generate different types of responses based on the model type
+      let simulatedResponse = '';
+      
+      if (currentModel?.type === 'image') {
+        simulatedResponse = `🎨 Image Generation Result:
 
-In a real implementation, this would be the actual response from the AI model based on your prompt: "${prompt.substring(0, 100)}${prompt.length > 100 ? '...' : ''}"
+Prompt: "${prompt}"
+Model: ${currentModel?.name}
+Parameters: Temperature: ${temperature[0]}, Max Tokens: ${maxTokens[0]}
 
-The response would vary based on the model parameters:
-- Temperature: ${temperature[0]}
-- Max Tokens: ${maxTokens[0]}
-- Model: ${currentModel?.name}
+✅ Image successfully generated! 
+📸 Resolution: 1024x1024px
+🎯 Style: High quality, detailed
+⚡ Processing time: 8.2 seconds
 
-This playground allows you to test different AI models and fine-tune their parameters before integrating them into your workflows.`);
-    
-    setIsLoading(false);
+In a real implementation, the generated image would appear here with download and edit options.`;
+      } else {
+        simulatedResponse = `🤖 AI Response from ${currentModel?.name}:
+
+Based on your prompt: "${prompt.substring(0, 100)}${prompt.length > 100 ? '...' : ''}"
+
+This is a comprehensive AI-generated response that demonstrates the model's capabilities. The response quality and style vary based on:
+
+📊 Model Parameters:
+• Temperature: ${temperature[0]} (${temperature[0] < 0.3 ? 'Focused' : temperature[0] > 1.5 ? 'Creative' : 'Balanced'})
+• Max Tokens: ${maxTokens[0]}
+• Model: ${currentModel?.name} (${currentModel?.provider})
+
+🔧 Response Characteristics:
+• Coherent and contextually relevant
+• Follows the specified tone and style
+• Incorporates domain-specific knowledge
+• Maintains consistency throughout
+
+💡 Real Implementation Features:
+✅ Streaming responses for real-time feedback
+✅ Token usage tracking and cost estimation
+✅ Response caching for efficiency
+✅ Multi-turn conversation support
+✅ Custom fine-tuning options
+
+This playground environment allows you to test and optimize your prompts before deploying them in production workflows.`;
+      }
+      
+      setResponse(simulatedResponse);
+      
+    } catch (error) {
+      setResponse(`❌ Error: Failed to process request. In a real implementation, this would show specific error details and suggested solutions.`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const useTemplate = (template: any) => {

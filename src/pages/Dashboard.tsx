@@ -233,11 +233,28 @@ export default function Dashboard() {
                   Your Workflows
                 </h2>
                 <div className="flex items-center space-x-2">
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => {
+                      // Filter functionality
+                      console.log('Open filter dialog');
+                    }}
+                  >
                     <Filter className="w-4 h-4 mr-2" />
                     Filter
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => {
+                      // Search functionality
+                      const searchTerm = prompt('Search workflows:');
+                      if (searchTerm) {
+                        console.log('Search for:', searchTerm);
+                      }
+                    }}
+                  >
                     <Search className="w-4 h-4 mr-2" />
                     Search
                   </Button>

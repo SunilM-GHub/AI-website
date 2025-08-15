@@ -341,10 +341,27 @@ export default function ApiKeys() {
                             </Button>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <Button variant="ghost" size="sm">
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => {
+                                // Edit functionality
+                                console.log('Edit API key:', apiKey.id);
+                              }}
+                            >
                               <Edit className="w-4 h-4" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="text-destructive hover:text-destructive"
+                              onClick={() => {
+                                // Delete functionality with confirmation
+                                if (confirm(`Are you sure you want to delete ${apiKey.name}?`)) {
+                                  console.log('Delete API key:', apiKey.id);
+                                }
+                              }}
+                            >
                               <Trash2 className="w-4 h-4" />
                             </Button>
                           </div>
