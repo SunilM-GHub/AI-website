@@ -50,7 +50,7 @@ const initialNodes: Node[] = [
       category: 'ai'
     },
     position: { x: 100, y: 125 },
-    className: 'workflow-node',
+    className: 'workflow-node bg-card border-2 border-secondary text-foreground shadow-lg',
   },
   {
     id: '3',
@@ -61,7 +61,7 @@ const initialNodes: Node[] = [
       category: 'data'
     },
     position: { x: 400, y: 125 },
-    className: 'workflow-node',
+    className: 'workflow-node bg-card border-2 border-accent text-foreground shadow-lg',
   },
   {
     id: '4',
@@ -73,7 +73,7 @@ const initialNodes: Node[] = [
       category: 'output'
     },
     position: { x: 250, y: 250 },
-    className: 'workflow-node',
+    className: 'workflow-node bg-card border-2 border-warning text-foreground shadow-lg',
   },
 ];
 
@@ -169,9 +169,26 @@ export default function WorkflowBuilder() {
 
   const executeWorkflow = async () => {
     setIsExecuting(true);
-    // Simulate workflow execution
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setIsExecuting(false);
+    try {
+      // Simulate workflow execution with proper steps
+      console.log('Starting workflow execution...');
+      
+      // Step 1: Validate nodes
+      await new Promise(resolve => setTimeout(resolve, 500));
+      console.log('Nodes validated');
+      
+      // Step 2: Execute workflow steps
+      for (let i = 0; i < nodes.length; i++) {
+        await new Promise(resolve => setTimeout(resolve, 300));
+        console.log(`Executing node: ${nodes[i].data.label}`);
+      }
+      
+      console.log('Workflow completed successfully!');
+    } catch (error) {
+      console.error('Workflow execution failed:', error);
+    } finally {
+      setIsExecuting(false);
+    }
   };
 
   return (
@@ -228,20 +245,21 @@ export default function WorkflowBuilder() {
             <Button
               onClick={executeWorkflow}
               disabled={isExecuting}
-              className="bg-gradient-primary hover:opacity-90"
+              className="bg-gradient-primary hover:opacity-90 cursor-pointer"
+              style={{ cursor: 'pointer' }}
             >
               <Play className="w-4 h-4 mr-2" />
               {isExecuting ? 'Executing...' : 'Run Workflow'}
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" className="cursor-pointer" style={{ cursor: 'pointer' }}>
               <Save className="w-4 h-4 mr-2" />
               Save
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" className="cursor-pointer" style={{ cursor: 'pointer' }}>
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" className="cursor-pointer" style={{ cursor: 'pointer' }}>
               <Upload className="w-4 h-4 mr-2" />
               Import
             </Button>

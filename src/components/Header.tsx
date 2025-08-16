@@ -34,7 +34,7 @@ const navigation = [
       { name: 'Enterprise', href: '/enterprise', icon: Users, description: 'Large-scale deployments' },
       { name: 'Startups', href: '/startups', icon: Zap, description: 'Rapid automation setup' },
       { name: 'Integrations', href: '/integrations', icon: Workflow, description: 'Connect everything' },
-      { name: 'Partners', href: '/partners', icon: Users, description: 'Join our ecosystem' },
+      
     ]
   },
   {
@@ -165,12 +165,12 @@ export default function Header() {
 
             {/* CTA Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/dashboard">
+              <Link to="/signin">
                 <Button variant="outline" className="border-primary/50 hover:border-primary">
                   Sign In
                 </Button>
               </Link>
-              <Link to="/dashboard">
+              <Link to="/get-started">
                 <Button className="bg-gradient-primary hover:opacity-90 glow-primary">
                   Get Started
                 </Button>

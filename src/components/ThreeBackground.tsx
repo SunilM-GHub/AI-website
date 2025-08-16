@@ -21,8 +21,8 @@ function ParticleField() {
       const time = state.clock.getElapsedTime();
       
       // Faster, more noticeable movement
-      ref.current.rotation.x = time * 0.02;
-      ref.current.rotation.y = time * 0.015;
+      ref.current.rotation.x = time * 0.035;
+      ref.current.rotation.y = time * 0.025;
 
       // More dynamic floating animation for stars
       const positions = ref.current.geometry.attributes.position.array as Float32Array;
@@ -42,7 +42,7 @@ function ParticleField() {
         size={0.8}
         sizeAttenuation={true}
         depthWrite={false}
-        opacity={0.7}
+        opacity={0.8}
         blending={THREE.AdditiveBlending}
       />
     </Points>

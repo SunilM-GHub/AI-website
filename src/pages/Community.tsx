@@ -106,11 +106,11 @@ export default function Community() {
               and learn from the best in the community.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-primary glow-primary">
+              <Button size="lg" className="bg-gradient-primary glow-primary" onClick={() => window.open('https://discord.gg/neuroflow', '_blank')}>
                 Join Discord
                 <MessageCircle className="ml-2 w-5 h-5" />
               </Button>
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="outline" onClick={() => window.location.href = '/flows'}>
                 Browse Workflows
               </Button>
             </div>
@@ -237,44 +237,75 @@ export default function Community() {
         </div>
       </section>
 
-      {/* Events */}
+      {/* Community Guidelines */}
       <section className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-hero text-gradient-cyber mb-4">
-              Upcoming Events
+              Community Guidelines
             </h2>
             <p className="text-lg text-muted-foreground">
-              Join us for community events and learning opportunities
+              How to be part of our growing community
             </p>
           </div>
           
           <div className="grid lg:grid-cols-3 gap-8">
-            {events.map((event, index) => (
-              <motion.div
-                key={event.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="p-6 glass-effect rounded-xl"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <Badge className="bg-gradient-primary text-primary-foreground">
-                    {event.type}
-                  </Badge>
-                  <span className="text-sm text-muted-foreground">{event.date}</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">
-                  {event.title}
-                </h3>
-                <p className="text-muted-foreground mb-4">
-                  {event.description}
-                </p>
-                <Button className="w-full bg-gradient-primary">
-                  Learn More
-                </Button>
-              </motion.div>
-            ))}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="p-6 glass-effect rounded-xl"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <Badge className="bg-gradient-primary text-primary-foreground">
+                  Be Respectful
+                </Badge>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">
+                Respectful Communication
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Treat all community members with respect and kindness
+              </p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="p-6 glass-effect rounded-xl"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <Badge className="bg-gradient-primary text-primary-foreground">
+                  Share Knowledge
+                </Badge>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">
+                Knowledge Sharing
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Share your workflows, tips, and help others learn
+              </p>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="p-6 glass-effect rounded-xl"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <Badge className="bg-gradient-primary text-primary-foreground">
+                  Stay Helpful
+                </Badge>
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">
+                Be Helpful
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Answer questions and provide constructive feedback
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>

@@ -22,6 +22,8 @@ import SignUp from "./pages/SignUp";
 import GetStarted from "./pages/GetStarted";
 import WorkflowTemplate from "./pages/WorkflowTemplate";
 import WorkflowBuilder from "./components/WorkflowBuilder";
+import WatchDemo from "./pages/WatchDemo";
+import StartFreeTrial from "./pages/StartFreeTrial";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import ThreeBackground from "./components/ThreeBackground";
@@ -57,6 +59,8 @@ const App = () => (
               <Route path="/get-started" element={<GetStarted />} />
               <Route path="/template/:id" element={<WorkflowTemplate />} />
               <Route path="/builder" element={<WorkflowBuilder />} />
+              <Route path="/watch-demo" element={<WatchDemo />} />
+              <Route path="/start-free-trial" element={<StartFreeTrial />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
