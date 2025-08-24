@@ -235,32 +235,14 @@ export default function WorkflowTemplate() {
                 </DialogContent>
               </Dialog>
 
-              <Button 
-                onClick={handleDeploy}
-                disabled={isDeploying}
-                className="bg-gradient-primary hover:opacity-90 glow-primary min-w-32"
-              >
-                {isDeploying ? (
-                  <>
-                    <Zap className="w-4 h-4 mr-2 animate-spin" />
-                    Deploying...
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-4 h-4 mr-2" />
-                    Use Template
-                  </>
-                )}
-              </Button>
-
-              <div className="flex space-x-2">
-                <Button variant="ghost" size="sm">
-                  <Share className="w-4 h-4" />
+              <Link to="/builder" state={{ template }}>
+                <Button
+                  className="bg-gradient-primary hover:opacity-90 glow-primary min-w-32 w-full"
+                >
+                  <Play className="w-4 h-4 mr-2" />
+                  Use Template
                 </Button>
-                <Button variant="ghost" size="sm">
-                  <Download className="w-4 h-4" />
-                </Button>
-              </div>
+              </Link>
             </div>
           </div>
         </motion.div>

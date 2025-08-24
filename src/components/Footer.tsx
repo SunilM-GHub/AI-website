@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 import { 
   Workflow, 
   Github, 
@@ -56,6 +58,29 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes('@')) {
+      toast.error('Please enter a valid email address.');
+      return;
+    }
+
+    setIsSubscribing(true);
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      toast.success('Thanks for subscribing! Check your inbox for a confirmation email.');
+      setEmail('');
+    } catch (error) {
+      toast.error('Something went wrong. Please try again later.');
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
   return (
     <footer className="relative bg-card/50 border-t border-border/50">
       {/* Background Effects */}
@@ -82,17 +107,24 @@ export default function Footer() {
               Get the latest updates on AI workflows, new integrations, and platform improvements.
               Join thousands of automation enthusiasts.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <Input
                 type="email"
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isSubscribing}
                 className="flex-1 bg-muted/50 border-border/50 focus:border-primary"
               />
-              <Button className="bg-gradient-primary hover:opacity-90 glow-primary group">
-                Subscribe
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
+              <Button
+                type="submit"
+                disabled={isSubscribing}
+                className="bg-gradient-primary hover:opacity-90 glow-primary group"
+              >
+                {isSubscribing ? 'Subscribing...' : 'Subscribe'}
+                {!isSubscribing && <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-200" />}
               </Button>
-            </div>
+            </form>
           </div>
         </motion.div>
 

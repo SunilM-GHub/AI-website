@@ -174,10 +174,12 @@ export default function Flows() {
                 Create powerful automation workflows with our visual editor
               </p>
             </div>
-            <Button className="bg-gradient-primary hover:opacity-90 glow-primary">
-              <Plus className="w-4 h-4 mr-2" />
-              Create from Scratch
-            </Button>
+            <Link to="/builder">
+              <Button className="bg-gradient-primary hover:opacity-90 glow-primary">
+                <Plus className="w-4 h-4 mr-2" />
+                Create from Scratch
+              </Button>
+            </Link>
           </div>
 
           {/* Search and Filters */}
