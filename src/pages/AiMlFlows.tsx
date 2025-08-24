@@ -5,14 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Grid, 
-  List, 
-  Eye, 
-  Edit, 
+import {
+  Plus,
+  Search,
+  Filter,
+  Grid,
+  List,
+  Eye,
+  Edit,
   Trash2,
   Play,
   Share,
@@ -143,15 +143,14 @@ const getDifficultyColor = (difficulty: string) => {
   }
 };
 
-export default function Flows() {
+export default function AiMlFlows() {
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
 
   const filteredTemplates = workflowTemplates.filter(template => {
     const matchesSearch = template.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          template.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || template.category === selectedCategory;
+    const matchesCategory = template.tags.includes('AI');
     return matchesSearch && matchesCategory;
   });
 
@@ -168,10 +167,10 @@ export default function Flows() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h1 className="text-4xl font-bold text-gradient-primary mb-2">
-                Workflow Editor
+                AI & ML Workflows
               </h1>
               <p className="text-muted-foreground">
-                Create powerful automation workflows with our visual editor
+                Browse templates for AI and Machine Learning tasks
               </p>
             </div>
             <Link to="/builder">
@@ -187,7 +186,7 @@ export default function Flows() {
             <div className="flex-1 relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
-                placeholder="Search workflows and templates..."
+                placeholder="Search AI & ML workflows..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 bg-muted/50 border-border/50 focus:border-primary"
@@ -220,15 +219,13 @@ export default function Flows() {
               <h3 className="text-lg font-semibold text-foreground mb-4">
                 Node Library
               </h3>
-              
+
               <div className="space-y-6">
                 {nodeTypes.map((category, categoryIndex) => (
                   <div key={category.category}>
-                    <Link to={`/flows/${category.category.toLowerCase().replace(' & ', '-')}`}>
-                      <h4 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider hover:text-primary transition-colors">
-                        {category.category}
-                      </h4>
-                    </Link>
+                    <h4 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider">
+                      {category.category}
+                    </h4>
                     <div className="space-y-2">
                       {category.nodes.map((node, nodeIndex) => (
                         <motion.div
@@ -269,7 +266,7 @@ export default function Flows() {
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-semibold text-foreground">
-                  Workflow Templates
+                  AI & ML Templates
                 </h2>
                 <div className="text-sm text-muted-foreground">
                   {filteredTemplates.length} templates found
@@ -307,7 +304,7 @@ export default function Flows() {
                           </div>
                         </div>
                       )}
-                      
+
                       <div className="p-6">
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex-1">
