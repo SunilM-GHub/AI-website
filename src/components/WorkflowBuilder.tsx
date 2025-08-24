@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   ReactFlow,
   addEdge,
@@ -10,12 +11,19 @@ import {
   Connection,
   Edge,
   Node,
-  Position,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import {
+  SidebarProvider,
+  Sidebar,
+  SidebarHeader,
+  SidebarContent,
+  SidebarTrigger,
+  SidebarInset,
+} from '@/components/ui/sidebar';
 import { 
   Brain, 
   Database, 
@@ -25,7 +33,8 @@ import {
   Play,
   Save,
   Download,
-  Upload
+  Upload,
+  Menu
 } from 'lucide-react';
 
 const initialNodes: Node[] = [
@@ -120,9 +129,32 @@ const nodeLibrary = [
 ];
 
 export default function WorkflowBuilder() {
+  const location = useLocation();
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [isExecuting, setIsExecuting] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (location.state && location.state.template) {
+      const { template } = location.state;
+      const templateNodes = template.workflow.nodes.map((node: any, index: number) => ({
+        id: node.id.toString(),
+        data: { label: node.type, description: node.description, icon: node.icon },
+        position: { x: 250, y: 100 + index * 100 },
+        className: 'workflow-node',
+      }));
+      // Simple edge creation for demonstration
+      const templateEdges = templateNodes.slice(1).map((node: any, index: number) => ({
+        id: `e${templateNodes[index].id}-${node.id}`,
+        source: templateNodes[index].id,
+        target: node.id,
+      }));
+      setNodes(templateNodes);
+      setEdges(templateEdges);
+      toast.success(`Loaded template: ${template.name}`);
+    }
+  }, [location.state, setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
@@ -192,112 +224,129 @@ export default function WorkflowBuilder() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="h-screen flex">
-        {/* Node Library Sidebar */}
-        <div className="w-80 border-r border-border/50 bg-muted/20 p-6 overflow-y-auto">
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-foreground mb-2">
-              Workflow Builder
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              Drag nodes to create your workflow
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            {nodeLibrary.map((category) => (
-              <div key={category.category}>
-                <h3 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider">
-                  {category.category}
-                </h3>
-                <div className="space-y-2">
-                  {category.nodes.map((node) => (
-                    <div
-                      key={node.type}
-                      className="flex items-center space-x-3 p-3 rounded-lg bg-card hover:bg-accent cursor-grab active:cursor-grabbing transition-colors duration-200 border border-border/50"
-                      draggable
-                      onDragStart={(event) => onDragStart(event, node.type)}
+    <SidebarProvider>
+      <div className="min-h-screen bg-background">
+        <div className="h-screen flex">
+          <Sidebar>
+            <SidebarHeader>
+              <h2 className="text-xl font-semibold text-foreground">
+                Workflow Builder
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                Drag nodes to create your workflow
+              </p>
+            </SidebarHeader>
+            <SidebarContent className="p-4">
+              <div className="space-y-6">
+                <Button
+                  variant={selectedCategory === null ? 'secondary' : 'ghost'}
+                  className="w-full justify-start"
+                  onClick={() => setSelectedCategory(null)}
+                >
+                  All Nodes
+                </Button>
+                {nodeLibrary.map((category) => (
+                  <div key={category.category}>
+                    <h3
+                      className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider cursor-pointer hover:text-primary"
+                      onClick={() => setSelectedCategory(category.category)}
                     >
-                      <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                        <node.icon className="w-4 h-4 text-primary-foreground" />
+                      {category.category}
+                    </h3>
+                    {(selectedCategory === null || selectedCategory === category.category) && (
+                      <div className="space-y-2">
+                        {category.nodes.map((node) => (
+                          <div
+                            key={node.type}
+                            className="flex items-center space-x-3 p-3 rounded-lg bg-card hover:bg-accent cursor-grab active:cursor-grabbing transition-colors duration-200 border border-border/50 hover:border-primary/50"
+                            draggable
+                            onDragStart={(event) => onDragStart(event, node.type)}
+                          >
+                            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                              <node.icon className="w-4 h-4 text-primary-foreground" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-medium text-foreground">
+                                {node.label}
+                              </div>
+                              <div className="text-xs text-muted-foreground">
+                                {node.description}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium text-foreground">
-                          {node.label}
-                        </div>
-                        <div className="text-xs text-muted-foreground">
-                          {node.description}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </SidebarContent>
+          </Sidebar>
 
-        {/* Workflow Canvas */}
-        <div className="flex-1 relative">
-          {/* Toolbar */}
-          <div className="absolute top-4 left-4 z-10 flex items-center space-x-2">
-            <Button
-              onClick={executeWorkflow}
-              disabled={isExecuting}
-              className="bg-gradient-primary hover:opacity-90 cursor-pointer"
-              style={{ cursor: 'pointer' }}
-            >
-              <Play className="w-4 h-4 mr-2" />
-              {isExecuting ? 'Executing...' : 'Run Workflow'}
-            </Button>
-            <Button variant="outline" className="cursor-pointer" style={{ cursor: 'pointer' }}>
-              <Save className="w-4 h-4 mr-2" />
-              Save
-            </Button>
-            <Button variant="outline" className="cursor-pointer" style={{ cursor: 'pointer' }}>
-              <Download className="w-4 h-4 mr-2" />
-              Export
-            </Button>
-            <Button variant="outline" className="cursor-pointer" style={{ cursor: 'pointer' }}>
-              <Upload className="w-4 h-4 mr-2" />
-              Import
-            </Button>
-          </div>
+          <SidebarInset>
+            <div className="flex-1 relative h-full">
+              {/* Toolbar */}
+              <div className="absolute top-4 left-4 z-10 flex items-center space-x-2">
+                 <SidebarTrigger className="md:hidden">
+                    <Menu className="w-6 h-6" />
+                 </SidebarTrigger>
+                <Button
+                  onClick={executeWorkflow}
+                  disabled={isExecuting}
+                  className="bg-gradient-primary hover:opacity-90 cursor-pointer"
+                >
+                  <Play className="w-4 h-4 mr-2" />
+                  {isExecuting ? 'Executing...' : 'Run Workflow'}
+                </Button>
+                <Button variant="outline" onClick={() => toast.info('Save functionality not implemented yet.')}>
+                  <Save className="w-4 h-4 mr-2" />
+                  Save
+                </Button>
+                <Button variant="outline" onClick={() => toast.info('Export functionality not implemented yet.')}>
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
+                <Button variant="outline" onClick={() => toast.info('Import functionality not implemented yet.')}>
+                  <Upload className="w-4 h-4 mr-2" />
+                  Import
+                </Button>
+              </div>
 
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
-            fitView
-            className="bg-background"
-          >
-            <MiniMap 
-              nodeColor={(node) => {
-                switch (node.data?.category) {
-                  case 'trigger': return '#10b981';
-                  case 'ai': return '#8b5cf6';
-                  case 'data': return '#3b82f6';
-                  case 'output': return '#f59e0b';
-                  default: return '#6b7280';
-                }
-              }}
-              className="bg-muted/50"
-            />
-            <Controls className="bg-card border border-border" />
-            <Background 
-              color="#374151" 
-              gap={20} 
-              size={1}
-              className="opacity-20"
-            />
-          </ReactFlow>
+              <ReactFlow
+                nodes={nodes}
+                edges={edges}
+                onNodesChange={onNodesChange}
+                onEdgesChange={onEdgesChange}
+                onConnect={onConnect}
+                onDrop={onDrop}
+                onDragOver={onDragOver}
+                fitView
+                className="bg-background"
+              >
+                <MiniMap
+                  nodeColor={(node) => {
+                    switch (node.data?.category) {
+                      case 'trigger': return '#10b981';
+                      case 'ai': return '#8b5cf6';
+                      case 'data': return '#3b82f6';
+                      case 'output': return '#f59e0b';
+                      default: return '#6b7280';
+                    }
+                  }}
+                  className="bg-muted/50"
+                />
+                <Controls className="bg-card border border-border" />
+                <Background
+                  color="#374151"
+                  gap={20}
+                  size={1}
+                  className="opacity-20"
+                />
+              </ReactFlow>
+            </div>
+          </SidebarInset>
         </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }

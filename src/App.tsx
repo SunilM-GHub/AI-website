@@ -21,6 +21,9 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import GetStarted from "./pages/GetStarted";
 import WorkflowTemplate from "./pages/WorkflowTemplate";
+import AiMlFlows from "./pages/AiMlFlows";
+import DataFlows from "./pages/DataFlows";
+import CommunicationFlows from "./pages/CommunicationFlows";
 import WorkflowBuilder from "./components/WorkflowBuilder";
 import WatchDemo from "./pages/WatchDemo";
 import StartFreeTrial from "./pages/StartFreeTrial";
@@ -60,6 +63,9 @@ const App = () => (
               <Route path="/template/:id" element={<WorkflowTemplate />} />
               <Route path="/builder" element={<WorkflowBuilder />} />
               <Route path="/watch-demo" element={<WatchDemo />} />
+              <Route path="/flows/ai-ml" element={<AiMlFlows />} />
+              <Route path="/flows/data" element={<DataFlows />} />
+              <Route path="/flows/communication" element={<CommunicationFlows />} />
               <Route path="/start-free-trial" element={<StartFreeTrial />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
