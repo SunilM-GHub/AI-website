@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
+import { toast } from 'sonner';
 import {
   Plus,
   Search,
@@ -70,8 +71,7 @@ const workflowTemplates = [
     category: 'Customer Service',
     difficulty: 'Beginner',
     estimatedTime: '15 min',
-    tags: ['AI', 'Email', 'Support'],
-    preview: '/api/placeholder/300/200'
+    tags: ['AI', 'Email', 'Support']
   },
   {
     id: 2,
@@ -81,8 +81,7 @@ const workflowTemplates = [
     category: 'Content',
     difficulty: 'Intermediate',
     estimatedTime: '25 min',
-    tags: ['AI', 'Content', 'Social Media'],
-    preview: '/api/placeholder/300/200'
+    tags: ['AI', 'Content', 'Social Media']
   },
   {
     id: 3,
@@ -92,8 +91,7 @@ const workflowTemplates = [
     category: 'Sales',
     difficulty: 'Advanced',
     estimatedTime: '35 min',
-    tags: ['CRM', 'AI', 'Sales'],
-    preview: '/api/placeholder/300/200'
+    tags: ['CRM', 'AI', 'Sales']
   },
   {
     id: 4,
@@ -103,8 +101,7 @@ const workflowTemplates = [
     category: 'Analytics',
     difficulty: 'Advanced',
     estimatedTime: '45 min',
-    tags: ['Data', 'Analytics', 'Reports'],
-    preview: '/api/placeholder/300/200'
+    tags: ['Data', 'Analytics', 'Reports']
   },
   {
     id: 5,
@@ -114,8 +111,7 @@ const workflowTemplates = [
     category: 'Marketing',
     difficulty: 'Beginner',
     estimatedTime: '20 min',
-    tags: ['Social Media', 'Scheduling', 'Marketing'],
-    preview: '/api/placeholder/300/200'
+    tags: ['Social Media', 'Scheduling', 'Marketing']
   },
   {
     id: 6,
@@ -125,8 +121,7 @@ const workflowTemplates = [
     category: 'E-commerce',
     difficulty: 'Intermediate',
     estimatedTime: '30 min',
-    tags: ['E-commerce', 'Orders', 'Inventory'],
-    preview: '/api/placeholder/300/200'
+    tags: ['E-commerce', 'Orders', 'Inventory']
   }
 ];
 
@@ -199,7 +194,8 @@ export default function AiMlFlows() {
               >
                 {view === 'grid' ? <List className="w-4 h-4" /> : <Grid className="w-4 h-4" />}
               </Button>
-              <Button variant="outline">
+              {/* TODO: Implement filter functionality */}
+              <Button variant="outline" disabled>
                 <Filter className="w-4 h-4 mr-2" />
                 Filter
               </Button>
@@ -283,7 +279,8 @@ export default function AiMlFlows() {
                   >
                     <Card className="group glass-effect border-border/50 hover:border-primary/50 transition-all duration-300 hover:glow-primary overflow-hidden">
                       {view === 'grid' && (
-                        <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden">
+                        <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden flex items-center justify-center">
+                          <Workflow className="w-16 h-16 text-primary/50" />
                           <div className="absolute inset-0 cyber-grid opacity-20" />
                           <div className="absolute top-4 left-4">
                             <Badge className={getDifficultyColor(template.difficulty)}>
@@ -355,10 +352,34 @@ export default function AiMlFlows() {
                             </Button>
                           </Link>
                           <div className="flex items-center space-x-2">
-                            <Button variant="ghost" size="sm">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => {
+                                const url = `${window.location.origin}/template/${template.id}`;
+                                navigator.clipboard.writeText(url);
+                                toast('Link copied to clipboard');
+                              }}
+                            >
                               <Copy className="w-4 h-4" />
                             </Button>
-                            <Button variant="ghost" size="sm">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => {
+                                const url = `${window.location.origin}/template/${template.id}`;
+                                if (navigator.share) {
+                                  navigator.share({
+                                    title: template.name,
+                                    text: template.description,
+                                    url: url,
+                                  });
+                                } else {
+                                  navigator.clipboard.writeText(url);
+                                  toast('Link copied to clipboard');
+                                }
+                              }}
+                            >
                               <Share className="w-4 h-4" />
                             </Button>
                             <Link to="/builder">

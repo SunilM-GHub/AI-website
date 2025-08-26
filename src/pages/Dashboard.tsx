@@ -3,6 +3,14 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { 
   Plus, 
   Play, 
@@ -20,7 +28,8 @@ import {
   Calendar,
   MoreHorizontal,
   Filter,
-  Search
+  Search,
+  Trash2
 } from 'lucide-react';
 
 const workflows = [
@@ -162,7 +171,11 @@ const getStatusIcon = (status: string) => {
   }
 };
 
+import { useState } from 'react';
+
 export default function Dashboard() {
+  const [searchQuery, setSearchQuery] = useState('');
+
   return (
     <div className="min-h-screen py-8">
       <div className="container mx-auto px-4">
@@ -233,36 +246,33 @@ export default function Dashboard() {
                   Your Workflows
                 </h2>
                 <div className="flex items-center space-x-2">
+                  {/* TODO: Implement filter functionality */}
                   <Button 
                     variant="outline" 
                     size="sm"
-                    onClick={() => {
-                      // Filter functionality
-                      console.log('Open filter dialog');
-                    }}
+                    disabled
                   >
                     <Filter className="w-4 h-4 mr-2" />
                     Filter
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={() => {
-                      // Search functionality
-                      const searchTerm = prompt('Search workflows:');
-                      if (searchTerm) {
-                        console.log('Search for:', searchTerm);
-                      }
-                    }}
-                  >
-                    <Search className="w-4 h-4 mr-2" />
-                    Search
-                  </Button>
+                  <div className="relative w-64">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Search workflows..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10 bg-muted/50 border-border/50 focus:border-primary"
+                    />
+                  </div>
                 </div>
               </div>
 
               <div className="space-y-4">
-                {workflows.map((workflow, index) => {
+                {workflows
+                  .filter((workflow) =>
+                    workflow.name.toLowerCase().includes(searchQuery.toLowerCase())
+                  )
+                  .map((workflow, index) => {
                   const StatusIcon = getStatusIcon(workflow.status);
                   return (
                     <motion.div
@@ -293,9 +303,28 @@ export default function Dashboard() {
                               </div>
                             </div>
                           </div>
-                          <Button variant="ghost" size="sm">
-                            <MoreHorizontal className="w-4 h-4" />
-                          </Button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" size="sm" aria-label="Workflow options">
+                                <MoreHorizontal className="w-4 h-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem>
+                                <Settings className="w-4 h-4 mr-2" />
+                                Edit
+                              </DropdownMenuItem>
+                              <DropdownMenuItem>
+                                <Activity className="w-4 h-4 mr-2" />
+                                View Logs
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem className="text-destructive">
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Delete
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </div>
 
                         <div className="flex items-center justify-between">
@@ -310,16 +339,6 @@ export default function Dashboard() {
                             <div className="text-sm text-success">
                               {workflow.success}% success
                             </div>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Button variant="outline" size="sm">
-                              <Settings className="w-4 h-4 mr-1" />
-                              Edit
-                            </Button>
-                            <Button variant="outline" size="sm">
-                              <Activity className="w-4 h-4 mr-1" />
-                              Logs
-                            </Button>
                           </div>
                         </div>
                       </Card>

@@ -54,13 +54,17 @@ export default function Enterprise() {
               unlimited executions, and dedicated support.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-primary glow-primary">
-                Request Demo
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button size="lg" variant="outline">
-                Contact Sales
-              </Button>
+              <Link to="/about">
+                <Button size="lg" className="bg-gradient-primary glow-primary">
+                  Request Demo
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+              <Link to="/about">
+                <Button size="lg" variant="outline">
+                  Contact Sales
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -136,9 +140,11 @@ export default function Enterprise() {
                 <p className="text-muted-foreground mb-6">
                   Talk to our enterprise team about your specific needs and get a custom solution.
                 </p>
-                <Button size="lg" className="w-full bg-gradient-primary">
-                  Schedule Consultation
-                </Button>
+                <Link to="/about">
+                  <Button size="lg" className="w-full bg-gradient-primary">
+                    Schedule Consultation
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

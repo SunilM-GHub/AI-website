@@ -234,12 +234,15 @@ export default function About() {
               We're always looking for talented individuals who share our passion for AI and automation
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-primary">
+              {/* TODO: Add link to careers page */}
+              <Button size="lg" className="bg-gradient-primary" disabled>
                 View Open Positions
               </Button>
-              <Button size="lg" variant="outline">
-                Contact Us
-              </Button>
+              <a href="mailto:contact@neuroflow.ai">
+                <Button size="lg" variant="outline">
+                  Contact Us
+                </Button>
+              </a>
             </div>
           </motion.div>
         </div>

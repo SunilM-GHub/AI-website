@@ -240,7 +240,7 @@ export default function Pricing() {
                     </span>
                   </div>
                   
-                  <Link to="/dashboard">
+                  <Link to={plan.cta === 'Contact Sales' ? '/about' : '/dashboard'}>
                     <Button 
                       variant={plan.ctaVariant}
                       className={`w-full ${plan.ctaVariant === 'default' ? 'bg-gradient-primary hover:opacity-90 glow-primary' : ''}`}
@@ -350,14 +350,18 @@ export default function Pricing() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-gradient-primary hover:opacity-90 glow-primary">
-                <Headphones className="w-4 h-4 mr-2" />
-                Schedule a Demo
-              </Button>
-              <Button variant="outline" className="border-primary/50 hover:border-primary">
-                <Users className="w-4 h-4 mr-2" />
-                Contact Sales
-              </Button>
+              <Link to="/about">
+                <Button className="bg-gradient-primary hover:opacity-90 glow-primary">
+                  <Headphones className="w-4 h-4 mr-2" />
+                  Schedule a Demo
+                </Button>
+              </Link>
+              <Link to="/about">
+                <Button variant="outline" className="border-primary/50 hover:border-primary">
+                  <Users className="w-4 h-4 mr-2" />
+                  Contact Sales
+                </Button>
+              </Link>
             </div>
             
             <div className="flex items-center justify-center space-x-8 mt-8 text-sm text-muted-foreground">
