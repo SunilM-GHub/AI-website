@@ -74,13 +74,17 @@ export default function Startups() {
               to scale operations without scaling headcount.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-primary glow-primary">
-                Apply for Startup Program
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button size="lg" variant="outline">
-                View Pricing
-              </Button>
+              <Link to="/about">
+                <Button size="lg" className="bg-gradient-primary glow-primary">
+                  Apply for Startup Program
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
+              <Link to="/pricing">
+                <Button size="lg" variant="outline">
+                  View Pricing
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -194,10 +198,12 @@ export default function Startups() {
               Join the startup program and get the tools you need to automate your way to success.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-primary">
-                Apply Now
-                <Rocket className="ml-2 w-5 h-5" />
-              </Button>
+              <Link to="/about">
+                <Button size="lg" className="bg-gradient-primary">
+                  Apply Now
+                  <Rocket className="ml-2 w-5 h-5" />
+                </Button>
+              </Link>
               <Link to="/playground">
                 <Button size="lg" variant="outline">
                   Try Free Playground

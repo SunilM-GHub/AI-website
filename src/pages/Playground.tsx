@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
+import { toast } from 'sonner';
 import { 
   Play, 
   Zap, 
@@ -258,11 +259,13 @@ This playground environment allows you to test and optimize your prompts before 
                       Input
                     </h2>
                     <div className="flex items-center space-x-2">
-                      <Button variant="outline" size="sm">
+                      {/* TODO: Implement tips functionality */}
+                      <Button variant="outline" size="sm" disabled>
                         <Lightbulb className="w-4 h-4 mr-2" />
                         Tips
                       </Button>
-                      <Button variant="outline" size="sm">
+                      {/* TODO: Implement enhance functionality */}
+                      <Button variant="outline" size="sm" disabled>
                         <Wand2 className="w-4 h-4 mr-2" />
                         Enhance
                       </Button>
@@ -382,15 +385,25 @@ This playground environment allows you to test and optimize your prompts before 
                         Quick Actions
                       </h4>
                       <div className="space-y-2">
-                        <Button variant="outline" size="sm" className="w-full justify-start">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full justify-start"
+                          onClick={() => {
+                            navigator.clipboard.writeText(prompt);
+                            toast('Prompt copied to clipboard');
+                          }}
+                        >
                           <Copy className="w-4 h-4 mr-2" />
                           Copy Prompt
                         </Button>
-                        <Button variant="outline" size="sm" className="w-full justify-start">
+                        {/* TODO: Implement share setup functionality */}
+                        <Button variant="outline" size="sm" className="w-full justify-start" disabled>
                           <Share className="w-4 h-4 mr-2" />
                           Share Setup
                         </Button>
-                        <Button variant="outline" size="sm" className="w-full justify-start">
+                        {/* TODO: Implement save preset functionality */}
+                        <Button variant="outline" size="sm" className="w-full justify-start" disabled>
                           <Settings className="w-4 h-4 mr-2" />
                           Save Preset
                         </Button>
@@ -415,11 +428,19 @@ This playground environment allows you to test and optimize your prompts before 
                   </h2>
                   {response && (
                     <div className="flex items-center space-x-2">
-                      <Button variant="outline" size="sm">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          navigator.clipboard.writeText(response);
+                          toast('Response copied to clipboard');
+                        }}
+                      >
                         <Copy className="w-4 h-4 mr-2" />
                         Copy
                       </Button>
-                      <Button variant="outline" size="sm">
+                      {/* TODO: Implement export functionality */}
+                      <Button variant="outline" size="sm" disabled>
                         <Download className="w-4 h-4 mr-2" />
                         Export
                       </Button>

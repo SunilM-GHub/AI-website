@@ -16,7 +16,8 @@ import {
   Star,
   TrendingUp,
   Clock,
-  Layers
+  Layers,
+  User
 } from 'lucide-react';
 
 const features = [
@@ -98,21 +99,18 @@ const testimonials = [
     role: 'CTO at TechFlow',
     content: 'NeuroFlow reduced our data processing time by 90%. The AI integrations are incredibly powerful.',
     rating: 5,
-    avatar: '👩‍💻'
   },
   {
     name: 'Marcus Rodriguez',
     role: 'Head of Operations',
     content: 'The visual workflow builder is intuitive yet powerful. Our team was productive from day one.',
     rating: 5,
-    avatar: '👨‍💼'
   },
   {
     name: 'Dr. Emily Watson',
     role: 'Research Director',
     content: 'Finally, a platform that makes AI automation accessible to our entire research team.',
     rating: 5,
-    avatar: '👩‍🔬'
   }
 ];
 
@@ -315,7 +313,7 @@ export default function Home() {
                   </p>
                   <div className="flex items-center">
                     <div className="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-2xl mr-4">
-                      {testimonial.avatar}
+                      <User className="w-6 h-6 text-primary-foreground" />
                     </div>
                     <div>
                       <div className="font-semibold text-foreground">{testimonial.name}</div>
@@ -358,7 +356,7 @@ export default function Home() {
                     <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform duration-200" />
                   </Button>
                 </Link>
-                <Link to="/contact">
+                <Link to="/about">
                   <Button 
                     size="lg" 
                     variant="outline" 

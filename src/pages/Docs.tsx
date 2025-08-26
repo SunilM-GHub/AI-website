@@ -57,12 +57,14 @@ export default function Docs() {
             {/* Search Bar */}
             <div className="max-w-md mx-auto relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+              {/* TODO: Implement search functionality */}
               <Input
                 type="text"
                 placeholder="Search documentation..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10 h-12 bg-card/50 border-border"
+                disabled
               />
             </div>
           </motion.div>
@@ -83,13 +85,13 @@ export default function Docs() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {quickStart.map((step, index) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="p-6 glass-effect rounded-xl hover:bg-primary/5 transition-colors cursor-pointer group"
-              >
+              <Link to="#" key={step.title}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="p-6 glass-effect rounded-xl hover:bg-primary/5 transition-colors cursor-pointer group"
+                >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-2xl font-bold text-primary">{index + 1}</span>
                   <span className="text-sm text-muted-foreground">{step.time}</span>
@@ -101,7 +103,8 @@ export default function Docs() {
                   {step.description}
                 </p>
                 <ChevronRight className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>
@@ -170,12 +173,16 @@ export default function Docs() {
               Our support team and community are here to help you succeed
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-gradient-primary">
-                Contact Support
-              </Button>
-              <Button size="lg" variant="outline">
-                Join Community
-              </Button>
+              <Link to="/about">
+                <Button size="lg" className="bg-gradient-primary">
+                  Contact Support
+                </Button>
+              </Link>
+              <Link to="/community">
+                <Button size="lg" variant="outline">
+                  Join Community
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>

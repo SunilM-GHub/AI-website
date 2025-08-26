@@ -89,10 +89,12 @@ export default function Tutorials() {
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
               Step-by-step tutorials to help you become an AI automation expert
             </p>
-            <Button size="lg" className="bg-gradient-primary glow-primary">
-              Start Learning
-              <Play className="ml-2 w-5 h-5" />
-            </Button>
+            <Link to="#">
+              <Button size="lg" className="bg-gradient-primary glow-primary">
+                Start Learning
+                <Play className="ml-2 w-5 h-5" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
@@ -111,13 +113,13 @@ export default function Tutorials() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category, index) => (
-              <motion.div
-                key={category.name}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="p-6 glass-effect rounded-xl hover:bg-primary/5 transition-colors cursor-pointer group"
-              >
+              <Link to="#" key={category.name}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="p-6 glass-effect rounded-xl hover:bg-primary/5 transition-colors cursor-pointer group"
+                >
                 <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4">
                   <category.icon className="w-6 h-6 text-primary-foreground" />
                 </div>
@@ -128,7 +130,8 @@ export default function Tutorials() {
                   {category.count} tutorials
                 </p>
                 <ChevronRight className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-              </motion.div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>
@@ -148,13 +151,13 @@ export default function Tutorials() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {tutorials.map((tutorial, index) => (
-              <motion.div
-                key={tutorial.title}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-effect rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer group"
-              >
+              <Link to="#" key={tutorial.title}>
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  className="glass-effect rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer group"
+                >
                 {/* Thumbnail */}
                 <div className={`h-48 ${tutorial.thumbnail} relative flex items-center justify-center`}>
                   {tutorial.type === 'Video' ? (
@@ -196,7 +199,8 @@ export default function Tutorials() {
                     <ChevronRight className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                 </div>
-              </motion.div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>

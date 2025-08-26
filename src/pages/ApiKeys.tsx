@@ -5,6 +5,18 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { toast } from 'sonner';
 import { 
   Plus, 
   Key, 
@@ -209,7 +221,8 @@ export default function ApiKeys() {
                     <Input type="password" placeholder="Paste your API key here" />
                   </div>
                   <div className="flex space-x-2">
-                    <Button className="bg-gradient-primary flex-1">
+                    {/* TODO: Implement add key functionality */}
+                    <Button className="bg-gradient-primary flex-1" disabled>
                       Add Key
                     </Button>
                     <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
@@ -306,7 +319,14 @@ export default function ApiKeys() {
                                   <Eye className="w-4 h-4" />
                                 )}
                               </Button>
-                              <Button variant="ghost" size="sm">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => {
+                                  navigator.clipboard.writeText(apiKey.keyPreview);
+                                  toast('API key copied to clipboard');
+                                }}
+                              >
                                 <Copy className="w-4 h-4" />
                               </Button>
                             </div>
@@ -331,39 +351,55 @@ export default function ApiKeys() {
 
                         <div className="flex items-center justify-between mt-6 pt-4 border-t border-border/50">
                           <div className="flex items-center space-x-2">
-                            <Button variant="outline" size="sm">
+                            {/* TODO: Implement configure functionality */}
+                            <Button variant="outline" size="sm" disabled>
                               <Settings className="w-4 h-4 mr-1" />
                               Configure
                             </Button>
-                            <Button variant="outline" size="sm">
+                            {/* TODO: Implement test functionality */}
+                            <Button variant="outline" size="sm" disabled>
                               <Zap className="w-4 h-4 mr-1" />
                               Test
                             </Button>
                           </div>
                           <div className="flex items-center space-x-2">
+                            {/* TODO: Implement edit functionality */}
                             <Button 
                               variant="ghost" 
                               size="sm"
-                              onClick={() => {
-                                // Edit functionality
-                                console.log('Edit API key:', apiKey.id);
-                              }}
+                              disabled
                             >
                               <Edit className="w-4 h-4" />
                             </Button>
-                            <Button 
-                              variant="ghost" 
-                              size="sm" 
-                              className="text-destructive hover:text-destructive"
-                              onClick={() => {
-                                // Delete functionality with confirmation
-                                if (confirm(`Are you sure you want to delete ${apiKey.name}?`)) {
-                                  console.log('Delete API key:', apiKey.id);
-                                }
-                              }}
-                            >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="text-destructive hover:text-destructive"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    This action cannot be undone. This will permanently delete your API key and remove your data from our servers.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={() => {
+                                      console.log('Delete API key:', apiKey.id);
+                                    }}
+                                  >
+                                    Continue
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
                           </div>
                         </div>
                       </Card>
