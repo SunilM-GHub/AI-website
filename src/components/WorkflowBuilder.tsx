@@ -185,7 +185,7 @@ export default function WorkflowBuilder() {
       const newNode: Node = {
         id: `${nodes.length + 1}`,
         type,
-        position,
+.        position,
         data: { label: `${type} node` },
       };
 
