@@ -29,7 +29,9 @@ import {
   Settings,
   Bot,
   FileText,
-  Image
+  Image,
+  TrendingUp,
+  ShoppingCart
 } from 'lucide-react';
 
 const nodeTypes = [
@@ -71,7 +73,8 @@ const workflowTemplates = [
     category: 'Customer Service',
     difficulty: 'Beginner',
     estimatedTime: '15 min',
-    tags: ['AI', 'Email', 'Support']
+    tags: ['AI', 'Email', 'Support'],
+    icon: Users
   },
   {
     id: 2,
@@ -81,7 +84,8 @@ const workflowTemplates = [
     category: 'Content',
     difficulty: 'Intermediate',
     estimatedTime: '25 min',
-    tags: ['AI', 'Content', 'Social Media']
+    tags: ['AI', 'Content', 'Social Media'],
+    icon: FileText
   },
   {
     id: 3,
@@ -91,7 +95,8 @@ const workflowTemplates = [
     category: 'Sales',
     difficulty: 'Advanced',
     estimatedTime: '35 min',
-    tags: ['CRM', 'AI', 'Sales']
+    tags: ['CRM', 'AI', 'Sales'],
+    icon: TrendingUp
   },
   {
     id: 4,
@@ -101,7 +106,8 @@ const workflowTemplates = [
     category: 'Analytics',
     difficulty: 'Advanced',
     estimatedTime: '45 min',
-    tags: ['Data', 'Analytics', 'Reports']
+    tags: ['Data', 'Analytics', 'Reports'],
+    icon: Database
   },
   {
     id: 5,
@@ -111,7 +117,8 @@ const workflowTemplates = [
     category: 'Marketing',
     difficulty: 'Beginner',
     estimatedTime: '20 min',
-    tags: ['Social Media', 'Scheduling', 'Marketing']
+    tags: ['Social Media', 'Scheduling', 'Marketing'],
+    icon: Mail
   },
   {
     id: 6,
@@ -121,7 +128,8 @@ const workflowTemplates = [
     category: 'E-commerce',
     difficulty: 'Intermediate',
     estimatedTime: '30 min',
-    tags: ['E-commerce', 'Orders', 'Inventory']
+    tags: ['E-commerce', 'Orders', 'Inventory'],
+    icon: ShoppingCart
   }
 ];
 
@@ -169,12 +177,12 @@ export default function Flows() {
                 Create powerful automation workflows with our visual editor
               </p>
             </div>
-            <Link to="/builder">
-              <Button className="bg-gradient-primary hover:opacity-90 glow-primary">
+            <Button asChild className="bg-gradient-primary hover:opacity-90 glow-primary">
+              <Link to="/builder">
                 <Plus className="w-4 h-4 mr-2" />
                 Create from Scratch
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
 
           {/* Search and Filters */}
@@ -283,7 +291,7 @@ export default function Flows() {
                     <Card className="group glass-effect border-border/50 hover:border-primary/50 transition-all duration-300 hover:glow-primary overflow-hidden">
                       {view === 'grid' && (
                         <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden flex items-center justify-center">
-                          <Workflow className="w-16 h-16 text-primary/50" />
+                          <template.icon className="w-16 h-16 text-primary/50" />
                           <div className="absolute inset-0 cyber-grid opacity-20" />
                           <div className="absolute top-4 left-4">
                             <Badge className={getDifficultyColor(template.difficulty)}>
@@ -296,11 +304,11 @@ export default function Flows() {
                                 <Eye className="w-4 h-4" />
                               </Button>
                             </Link>
-                            <Link to="/builder">
-                              <Button size="sm" className="bg-gradient-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <Button asChild size="sm" className="bg-gradient-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              <Link to="/builder">
                                 <Play className="w-4 h-4" />
-                              </Button>
-                            </Link>
+                              </Link>
+                            </Button>
                           </div>
                         </div>
                       )}
@@ -385,11 +393,11 @@ export default function Flows() {
                             >
                               <Share className="w-4 h-4" />
                             </Button>
-                            <Link to="/builder">
-                              <Button size="sm" className="bg-gradient-primary hover:opacity-90">
+                            <Button asChild size="sm" className="bg-gradient-primary hover:opacity-90">
+                              <Link to="/builder">
                                 Use Template
-                              </Button>
-                            </Link>
+                              </Link>
+                            </Button>
                           </div>
                         </div>
                       </div>

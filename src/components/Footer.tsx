@@ -26,27 +26,27 @@ const footerLinks = {
   solutions: [
     { name: 'Enterprise', href: '/enterprise' },
     { name: 'Startups', href: '/startups' },
-    { name: 'Partners', href: '/partners' },
+    { name: 'Partners', href: '/about' },
     { name: 'Pricing', href: '/pricing' },
   ],
   resources: [
     { name: 'Documentation', href: '/docs' },
-    { name: 'API Reference', href: '/api' },
+    { name: 'API Reference', href: '/docs' },
     { name: 'Tutorials', href: '/tutorials' },
     { name: 'Community', href: '/community' },
-    { name: 'Support', href: '/support' },
+    { name: 'Support', href: '/about' },
   ],
   company: [
     { name: 'About', href: '/about' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Blog', href: '#' },
+    { name: 'Careers', href: '#' },
+    { name: 'Contact', href: '/about' },
   ],
   legal: [
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Terms of Service', href: '/terms' },
-    { name: 'Cookie Policy', href: '/cookies' },
-    { name: 'Security', href: '/security' },
+    { name: 'Privacy Policy', href: '#' },
+    { name: 'Terms of Service', href: '#' },
+    { name: 'Cookie Policy', href: '#' },
+    { name: 'Security', href: '#' },
   ]
 };
 

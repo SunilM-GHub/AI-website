@@ -42,7 +42,7 @@ const navigation = [
     icon: BookOpen,
     items: [
       { name: 'Documentation', href: '/docs', icon: BookOpen, description: 'Complete guides' },
-      { name: 'API Reference', href: '/api', icon: Settings, description: 'Technical docs' },
+      { name: 'API Reference', href: '/docs', icon: Settings, description: 'Technical docs' },
       { name: 'Tutorials', href: '/tutorials', icon: Play, description: 'Step-by-step learning' },
       { name: 'Community', href: '/community', icon: Users, description: 'Connect with others' },
     ]
@@ -226,12 +226,12 @@ export default function Header() {
                   
                   <div className="pt-4 border-t border-border/50">
                     <div className="flex flex-col space-y-3">
-                      <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Link to="/signin" onClick={() => setIsMobileMenuOpen(false)}>
                         <Button variant="outline" className="w-full">
                           Sign In
                         </Button>
                       </Link>
-                      <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Link to="/get-started" onClick={() => setIsMobileMenuOpen(false)}>
                         <Button className="w-full bg-gradient-primary">
                           Get Started
                         </Button>
