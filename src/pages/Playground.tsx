@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
 import { toast } from 'sonner';
+import OpenAI from 'openai';
 import { 
   Play, 
   Zap, 
@@ -92,24 +93,45 @@ export default function Playground() {
   const [temperature, setTemperature] = useState([0.7]);
   const [maxTokens, setMaxTokens] = useState([1000]);
   const [selectedCategory, setSelectedCategory] = useState(0);
+  const [apiKey, setApiKey] = useState('');
 
   const currentModel = aiModels.find(model => model.id === selectedModel);
 
   const handleRunPrompt = async () => {
     if (!prompt.trim()) return;
+
+    if (selectedModel === 'gpt-4' && !apiKey.trim()) {
+      toast.error('Please enter your OpenAI API key.');
+      return;
+    }
     
     setIsLoading(true);
     setResponse('');
     
     try {
-      // Simulate real API call with more realistic response
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Generate different types of responses based on the model type
-      let simulatedResponse = '';
-      
-      if (currentModel?.type === 'image') {
-        simulatedResponse = `🎨 Image Generation Result:
+      if (selectedModel === 'gpt-4') {
+        const openai = new OpenAI({
+          apiKey: apiKey,
+          dangerouslyAllowBrowser: true,
+        });
+
+        const chatCompletion = await openai.chat.completions.create({
+          messages: [{ role: 'user', content: prompt }],
+          model: 'gpt-4',
+          temperature: temperature[0],
+          max_tokens: maxTokens[0],
+        });
+
+        setResponse(chatCompletion.choices[0].message.content || '');
+      } else {
+        // Simulate real API call with more realistic response
+        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        // Generate different types of responses based on the model type
+        let simulatedResponse = '';
+
+        if (currentModel?.type === 'image') {
+          simulatedResponse = `🎨 Image Generation Result:
 
 Prompt: "${prompt}"
 Model: ${currentModel?.name}
@@ -121,8 +143,8 @@ Parameters: Temperature: ${temperature[0]}, Max Tokens: ${maxTokens[0]}
 ⚡ Processing time: 8.2 seconds
 
 In a real implementation, the generated image would appear here with download and edit options.`;
-      } else {
-        simulatedResponse = `🤖 AI Response from ${currentModel?.name}:
+        } else {
+          simulatedResponse = `🤖 AI Response from ${currentModel?.name}:
 
 Based on your prompt: "${prompt.substring(0, 100)}${prompt.length > 100 ? '...' : ''}"
 
@@ -147,12 +169,16 @@ This is a comprehensive AI-generated response that demonstrates the model's capa
 ✅ Custom fine-tuning options
 
 This playground environment allows you to test and optimize your prompts before deploying them in production workflows.`;
+        }
+
+        setResponse(simulatedResponse);
       }
-      
-      setResponse(simulatedResponse);
-      
-    } catch (error) {
-      setResponse(`❌ Error: Failed to process request. In a real implementation, this would show specific error details and suggested solutions.`);
+    } catch (error: any) {
+      if (error.response) {
+        setResponse(`❌ Error: ${error.response.data.error.message}`);
+      } else {
+        setResponse(`❌ Error: ${error.message}`);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -300,6 +326,21 @@ This playground environment allows you to test and optimize your prompts before 
                         </p>
                       )}
                     </div>
+
+                    {selectedModel === 'gpt-4' && (
+                      <div>
+                        <label className="text-sm font-medium text-foreground mb-2 block">
+                          OpenAI API Key
+                        </label>
+                        <Input
+                          type="password"
+                          placeholder="Enter your OpenAI API key"
+                          value={apiKey}
+                          onChange={(e) => setApiKey(e.target.value)}
+                          className="bg-muted/50 border-border/50 focus:border-primary"
+                        />
+                      </div>
+                    )}
 
                     <div>
                       <label className="text-sm font-medium text-foreground mb-2 block">

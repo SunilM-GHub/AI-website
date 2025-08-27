@@ -29,7 +29,9 @@ import {
   Settings,
   Bot,
   FileText,
-  Image
+  Image,
+  TrendingUp,
+  ShoppingCart
 } from 'lucide-react';
 
 const nodeTypes = [
@@ -71,7 +73,8 @@ const workflowTemplates = [
     category: 'Customer Service',
     difficulty: 'Beginner',
     estimatedTime: '15 min',
-    tags: ['AI', 'Email', 'Support']
+    tags: ['AI', 'Email', 'Support'],
+    icon: Users
   },
   {
     id: 2,
@@ -81,7 +84,8 @@ const workflowTemplates = [
     category: 'Content',
     difficulty: 'Intermediate',
     estimatedTime: '25 min',
-    tags: ['AI', 'Content', 'Social Media']
+    tags: ['AI', 'Content', 'Social Media'],
+    icon: FileText
   },
   {
     id: 3,
@@ -91,7 +95,8 @@ const workflowTemplates = [
     category: 'Sales',
     difficulty: 'Advanced',
     estimatedTime: '35 min',
-    tags: ['CRM', 'AI', 'Sales']
+    tags: ['CRM', 'AI', 'Sales'],
+    icon: TrendingUp
   },
   {
     id: 4,
@@ -101,7 +106,8 @@ const workflowTemplates = [
     category: 'Analytics',
     difficulty: 'Advanced',
     estimatedTime: '45 min',
-    tags: ['Data', 'Analytics', 'Reports']
+    tags: ['Data', 'Analytics', 'Reports'],
+    icon: Database
   },
   {
     id: 5,
@@ -111,7 +117,8 @@ const workflowTemplates = [
     category: 'Marketing',
     difficulty: 'Beginner',
     estimatedTime: '20 min',
-    tags: ['Social Media', 'Scheduling', 'Marketing']
+    tags: ['Social Media', 'Scheduling', 'Marketing'],
+    icon: Mail
   },
   {
     id: 6,
@@ -121,7 +128,8 @@ const workflowTemplates = [
     category: 'E-commerce',
     difficulty: 'Intermediate',
     estimatedTime: '30 min',
-    tags: ['E-commerce', 'Orders', 'Inventory']
+    tags: ['E-commerce', 'Orders', 'Inventory'],
+    icon: ShoppingCart
   }
 ];
 
@@ -280,7 +288,7 @@ export default function CommunicationFlows() {
                     <Card className="group glass-effect border-border/50 hover:border-primary/50 transition-all duration-300 hover:glow-primary overflow-hidden">
                       {view === 'grid' && (
                         <div className="aspect-video bg-gradient-to-br from-primary/20 to-secondary/20 relative overflow-hidden flex items-center justify-center">
-                          <Workflow className="w-16 h-16 text-primary/50" />
+                          <template.icon className="w-16 h-16 text-primary/50" />
                           <div className="absolute inset-0 cyber-grid opacity-20" />
                           <div className="absolute top-4 left-4">
                             <Badge className={getDifficultyColor(template.difficulty)}>
