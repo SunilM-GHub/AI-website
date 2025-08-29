@@ -25,6 +25,7 @@ import {
   SidebarTrigger,
   SidebarInset,
 } from '@/components/ui/sidebar';
+import CustomNode from '@/components/CustomNode';
 import { 
   Brain, 
   Database, 
@@ -137,6 +138,21 @@ export default function WorkflowBuilder() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const nodeTypes = {
+    'webhook': CustomNode,
+    'schedule': CustomNode,
+    'email': CustomNode,
+    'openai': CustomNode,
+    'claude': CustomNode,
+    'image-gen': CustomNode,
+    'database': CustomNode,
+    'json': CustomNode,
+    'transform': CustomNode,
+    'email-send': CustomNode,
+    'webhook-send': CustomNode,
+    'slack': CustomNode,
+  };
 
   const { id } = useParams();
 
@@ -355,6 +371,7 @@ export default function WorkflowBuilder() {
                 onDragOver={onDragOver}
                 fitView
                 className="bg-background"
+                nodeTypes={nodeTypes}
               >
                 <MiniMap
                   nodeColor={(node) => {
