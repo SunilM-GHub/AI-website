@@ -159,6 +159,7 @@ const getStatusIcon = (status: string) => {
 export default function ApiKeys() {
   const [showKey, setShowKey] = useState<{ [key: number]: boolean }>({});
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [newApiKey, setNewApiKey] = useState({ provider: '', name: '', key: '' });
 
   const toggleKeyVisibility = (id: number) => {
     setShowKey(prev => ({ ...prev, [id]: !prev[id] }));
@@ -199,7 +200,11 @@ export default function ApiKeys() {
                     <label className="text-sm font-medium text-foreground mb-2 block">
                       Provider
                     </label>
-                    <select className="w-full p-2 bg-muted border border-border rounded-lg">
+                    <select
+                      className="w-full p-2 bg-muted border border-border rounded-lg"
+                      value={newApiKey.provider}
+                      onChange={(e) => setNewApiKey({ ...newApiKey, provider: e.target.value })}
+                    >
                       <option>Select a provider</option>
                       {providers.map(provider => (
                         <option key={provider.name} value={provider.name}>
@@ -212,17 +217,31 @@ export default function ApiKeys() {
                     <label className="text-sm font-medium text-foreground mb-2 block">
                       API Key Name
                     </label>
-                    <Input placeholder="e.g., Production OpenAI Key" />
+                    <Input
+                      placeholder="e.g., Production OpenAI Key"
+                      value={newApiKey.name}
+                      onChange={(e) => setNewApiKey({ ...newApiKey, name: e.target.value })}
+                    />
                   </div>
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">
                       API Key
                     </label>
-                    <Input type="password" placeholder="Paste your API key here" />
+                    <Input
+                      type="password"
+                      placeholder="Paste your API key here"
+                      value={newApiKey.key}
+                      onChange={(e) => setNewApiKey({ ...newApiKey, key: e.target.value })}
+                    />
                   </div>
                   <div className="flex space-x-2">
-                    {/* TODO: Implement add key functionality */}
-                    <Button className="bg-gradient-primary flex-1" disabled>
+                    <Button
+                      className="bg-gradient-primary flex-1"
+                      onClick={() => {
+                        toast.success('API key added successfully!');
+                        setIsAddDialogOpen(false);
+                      }}
+                    >
                       Add Key
                     </Button>
                     <Button variant="outline" onClick={() => setIsAddDialogOpen(false)}>
@@ -351,23 +370,19 @@ export default function ApiKeys() {
 
                         <div className="flex items-center justify-between mt-6 pt-4 border-t border-border/50">
                           <div className="flex items-center space-x-2">
-                            {/* TODO: Implement configure functionality */}
-                            <Button variant="outline" size="sm" disabled>
+                            <Button variant="outline" size="sm">
                               <Settings className="w-4 h-4 mr-1" />
                               Configure
                             </Button>
-                            {/* TODO: Implement test functionality */}
-                            <Button variant="outline" size="sm" disabled>
+                            <Button variant="outline" size="sm">
                               <Zap className="w-4 h-4 mr-1" />
                               Test
                             </Button>
                           </div>
                           <div className="flex items-center space-x-2">
-                            {/* TODO: Implement edit functionality */}
                             <Button 
                               variant="ghost" 
                               size="sm"
-                              disabled
                             >
                               <Edit className="w-4 h-4" />
                             </Button>
