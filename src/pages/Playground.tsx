@@ -8,7 +8,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Slider } from '@/components/ui/slider';
 import { toast } from 'sonner';
 import OpenAI from 'openai';
+import { Link } from 'react-router-dom';
 import { 
+  Plus,
   Play, 
   Zap, 
   Brain, 
@@ -207,10 +209,18 @@ This playground environment allows you to test and optimize your prompts before 
                 Test and experiment with different AI models and prompts
               </p>
             </div>
-            <Badge className="bg-gradient-secondary text-secondary-foreground border-none">
-              <Sparkles className="w-4 h-4 mr-2" />
-              Interactive Testing
-            </Badge>
+            <div className="flex items-center space-x-4">
+              <Badge className="bg-gradient-secondary text-secondary-foreground border-none">
+                <Sparkles className="w-4 h-4 mr-2" />
+                Interactive Testing
+              </Badge>
+              <Button asChild className="bg-gradient-primary hover:opacity-90 glow-primary">
+                <Link to="/builder">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create from Scratch
+                </Link>
+              </Button>
+            </div>
           </div>
         </motion.div>
 
