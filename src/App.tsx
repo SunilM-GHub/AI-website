@@ -62,6 +62,7 @@ const App = () => (
               <Route path="/get-started" element={<GetStarted />} />
               <Route path="/template/:id" element={<WorkflowTemplate />} />
               <Route path="/builder" element={<WorkflowBuilder />} />
+              <Route path="/builder/:id" element={<WorkflowBuilder />} />
               <Route path="/watch-demo" element={<WatchDemo />} />
               <Route path="/flows/ai-ml" element={<AiMlFlows />} />
               <Route path="/flows/data" element={<DataFlows />} />

@@ -64,74 +64,7 @@ const nodeTypes = [
   }
 ];
 
-const workflowTemplates = [
-  {
-    id: 1,
-    name: 'Customer Support Automation',
-    description: 'Automatically categorize and respond to customer inquiries using AI',
-    nodes: 8,
-    category: 'Customer Service',
-    difficulty: 'Beginner',
-    estimatedTime: '15 min',
-    tags: ['AI', 'Email', 'Support'],
-    icon: Users
-  },
-  {
-    id: 2,
-    name: 'Content Generation Pipeline',
-    description: 'Generate blog posts, social media content, and newsletters from topics',
-    nodes: 12,
-    category: 'Content',
-    difficulty: 'Intermediate',
-    estimatedTime: '25 min',
-    tags: ['AI', 'Content', 'Social Media'],
-    icon: FileText
-  },
-  {
-    id: 3,
-    name: 'Lead Scoring & Qualification',
-    description: 'Score and qualify leads using multiple data sources and AI analysis',
-    nodes: 10,
-    category: 'Sales',
-    difficulty: 'Advanced',
-    estimatedTime: '35 min',
-    tags: ['CRM', 'AI', 'Sales'],
-    icon: TrendingUp
-  },
-  {
-    id: 4,
-    name: 'Data Processing & Analytics',
-    description: 'Clean, transform, and analyze large datasets with automated reporting',
-    nodes: 15,
-    category: 'Analytics',
-    difficulty: 'Advanced',
-    estimatedTime: '45 min',
-    tags: ['Data', 'Analytics', 'Reports'],
-    icon: Database
-  },
-  {
-    id: 5,
-    name: 'Social Media Automation',
-    description: 'Schedule and publish content across multiple social media platforms',
-    nodes: 6,
-    category: 'Marketing',
-    difficulty: 'Beginner',
-    estimatedTime: '20 min',
-    tags: ['Social Media', 'Scheduling', 'Marketing'],
-    icon: Mail
-  },
-  {
-    id: 6,
-    name: 'E-commerce Order Processing',
-    description: 'Automate order fulfillment, inventory updates, and customer notifications',
-    nodes: 14,
-    category: 'E-commerce',
-    difficulty: 'Intermediate',
-    estimatedTime: '30 min',
-    tags: ['E-commerce', 'Orders', 'Inventory'],
-    icon: ShoppingCart
-  }
-];
+import { workflowTemplates } from '@/lib/templates';
 
 const getDifficultyColor = (difficulty: string) => {
   switch (difficulty) {
@@ -305,7 +238,7 @@ export default function Flows() {
                               </Button>
                             </Link>
                             <Button asChild size="sm" className="bg-gradient-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <Link to="/builder" state={{ template }}>
+                              <Link to={`/builder/${template.id}`} state={{ template }}>
                                 <Play className="w-4 h-4" />
                               </Link>
                             </Button>
@@ -394,7 +327,7 @@ export default function Flows() {
                               <Share className="w-4 h-4" />
                             </Button>
                             <Button asChild size="sm" className="bg-gradient-primary hover:opacity-90">
-                              <Link to="/builder" state={{ template }}>
+                              <Link to={`/builder/${template.id}`} state={{ template }}>
                                 Use Template
                               </Link>
                             </Button>

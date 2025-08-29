@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
+import { workflowTemplates } from '@/lib/templates';
 import {
   ReactFlow,
   addEdge,
@@ -135,26 +136,33 @@ export default function WorkflowBuilder() {
   const [isExecuting, setIsExecuting] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
+  const { id } = useParams();
+
   useEffect(() => {
-    if (location.state && location.state.template) {
-      const { template } = location.state;
-      const templateNodes = template.workflow.nodes.map((node: any, index: number) => ({
+    let template;
+    if (id) {
+      template = workflowTemplates.find((t) => t.id === parseInt(id));
+    } else if (location.state && location.state.template) {
+      template = location.state.template;
+    }
+
+    if (template && template.workflow) {
+      const templateNodes = template.workflow.nodes.map((node: any) => ({
+        ...node,
         id: node.id.toString(),
-        data: { label: node.type, description: node.description, icon: node.icon },
-        position: { x: 250, y: 100 + index * 100 },
-        className: 'workflow-node',
       }));
-      // Simple edge creation for demonstration
-      const templateEdges = templateNodes.slice(1).map((node: any, index: number) => ({
-        id: `e${templateNodes[index].id}-${node.id}`,
-        source: templateNodes[index].id,
-        target: node.id,
+      const templateEdges = template.workflow.edges.map((edge: any) => ({
+        ...edge,
+        id: `e${edge.source}-${edge.target}`,
       }));
       setNodes(templateNodes);
       setEdges(templateEdges);
       toast.success(`Loaded template: ${template.name}`);
+    } else {
+      setNodes(initialNodes);
+      setEdges(initialEdges);
     }
-  }, [location.state, setNodes, setEdges]);
+  }, [id, location.state, setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),
