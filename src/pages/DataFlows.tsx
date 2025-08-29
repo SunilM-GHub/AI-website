@@ -176,12 +176,12 @@ export default function DataFlows() {
                 Browse templates for Data Processing and Analytics
               </p>
             </div>
-            <Link to="/builder">
-              <Button className="bg-gradient-primary hover:opacity-90 glow-primary">
+            <Button asChild className="bg-gradient-primary hover:opacity-90 glow-primary">
+              <Link to="/builder">
                 <Plus className="w-4 h-4 mr-2" />
                 Create from Scratch
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
 
           {/* Search and Filters */}
@@ -301,11 +301,11 @@ export default function DataFlows() {
                                 <Eye className="w-4 h-4" />
                               </Button>
                             </Link>
-                            <Link to="/builder">
-                              <Button size="sm" className="bg-gradient-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <Button asChild size="sm" className="bg-gradient-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                              <Link to="/builder" state={{ template }}>
                                 <Play className="w-4 h-4" />
-                              </Button>
-                            </Link>
+                              </Link>
+                            </Button>
                           </div>
                         </div>
                       )}
@@ -390,11 +390,11 @@ export default function DataFlows() {
                             >
                               <Share className="w-4 h-4" />
                             </Button>
-                            <Link to="/builder">
-                              <Button size="sm" className="bg-gradient-primary hover:opacity-90">
+                            <Button asChild size="sm" className="bg-gradient-primary hover:opacity-90">
+                              <Link to="/builder" state={{ template }}>
                                 Use Template
-                              </Button>
-                            </Link>
+                              </Link>
+                            </Button>
                           </div>
                         </div>
                       </div>

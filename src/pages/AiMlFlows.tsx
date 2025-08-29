@@ -302,7 +302,7 @@ export default function AiMlFlows() {
                               </Button>
                             </Link>
                             <Button asChild size="sm" className="bg-gradient-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                              <Link to="/builder">
+                              <Link to="/builder" state={{ template }}>
                                 <Play className="w-4 h-4" />
                               </Link>
                             </Button>
@@ -391,7 +391,7 @@ export default function AiMlFlows() {
                               <Share className="w-4 h-4" />
                             </Button>
                             <Button asChild size="sm" className="bg-gradient-primary hover:opacity-90">
-                              <Link to="/builder">
+                              <Link to="/builder" state={{ template }}>
                                 Use Template
                               </Link>
                             </Button>
