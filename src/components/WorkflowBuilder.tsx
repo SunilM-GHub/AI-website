@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { workflowTemplates } from '@/lib/templates';
 import {
@@ -135,18 +135,31 @@ export default function WorkflowBuilder() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [isExecuting, setIsExecuting] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { id } = useParams();
 
   useEffect(() => {
+    console.log('WorkflowBuilder mounted');
+    if (containerRef.current) {
+      console.log('Container dimensions:', containerRef.current.getBoundingClientRect());
+    }
+
     let template;
     if (id) {
+      console.log(`Fetching template with id: ${id}`);
       template = workflowTemplates.find((t) => t.id === parseInt(id));
+      if (!template) {
+        setError(`Template with id ${id} not found.`);
+      }
     } else if (location.state && location.state.template) {
+      console.log('Loading template from location state');
       template = location.state.template;
     }
 
     if (template && template.workflow) {
+      console.log(`Loading template: ${template.name}`);
       const templateNodes = template.workflow.nodes.map((node: any) => ({
         ...node,
         id: node.id.toString(),
@@ -158,9 +171,12 @@ export default function WorkflowBuilder() {
       setNodes(templateNodes);
       setEdges(templateEdges);
       toast.success(`Loaded template: ${template.name}`);
-    } else {
+      setError(null);
+    } else if (!id) {
+      console.log('Loading initial nodes');
       setNodes(initialNodes);
       setEdges(initialEdges);
+      setError(null);
     }
   }, [id, location.state, setNodes, setEdges]);
 
@@ -292,9 +308,18 @@ export default function WorkflowBuilder() {
           </Sidebar>
 
           <SidebarInset>
-            <div className="flex-1 relative h-full">
-              {/* Toolbar */}
-              <div className="absolute top-4 left-4 z-10 flex items-center space-x-2">
+            <div className="flex-1 relative h-full" ref={containerRef}>
+              {error ? (
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold text-destructive mb-4">Error</h2>
+                    <p className="text-muted-foreground">{error}</p>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {/* Toolbar */}
+                  <div className="absolute top-4 left-4 z-10 flex items-center space-x-2">
                  <SidebarTrigger className="md:hidden">
                     <Menu className="w-6 h-6" />
                  </SidebarTrigger>
@@ -351,6 +376,8 @@ export default function WorkflowBuilder() {
                   className="opacity-20"
                 />
               </ReactFlow>
+                </>
+              )}
             </div>
           </SidebarInset>
         </div>
